@@ -1,0 +1,31 @@
+{
+  "name": "detective-node",
+  "version": "0.1.0",
+  "description": "🔎 A distributed application health monitoring library",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sohamkamani/node-detective.git"
+  },
+  "keywords": [
+    "distributed",
+    "application",
+    "monitoring",
+    "health"
+  ],
+  "author": "Soham Kamani",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sohamkamani/node-detective/issues"
+  },
+  "homepage": "https://github.com/sohamkamani/node-detective#readme",
+  "devDependencies": {
+    "body-parser": "^1.18.3"
+  },
+  "dependencies": {
+    "npm": "^6.4.1"
+  }
+}
