@@ -1,4 +1,5 @@
 import State from './state'
+import timer from './timer'
 
 type detectorFn = (cb: (err?: Error) => void) => void
 type callbackWithState = (s: State) => void
@@ -22,8 +23,11 @@ class Dependency {
   }
 
   getState (cb: callbackWithState) {
+    const timerDone = timer()
     this.detector((err) => {
+      const latency = timerDone()
       const state = new State(this.name)
+      state.latency = latency
       if (err) {
         state.withError(err)
         this.state = state
@@ -37,3 +41,5 @@ class Dependency {
     })
   }
 }
+
+export default Dependency
