@@ -2,7 +2,7 @@ import State from './state'
 import timer from './timer'
 
 type detectorFn = (cb: (err?: Error) => void) => void
-type callbackWithState = (s: State) => void
+export type callbackWithState = (s: State) => void
 
 const noop: detectorFn = (cb) => {
   cb()
