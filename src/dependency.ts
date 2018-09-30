@@ -11,11 +11,9 @@ const noop: detectorFn = (cb) => {
 class Dependency {
   name: string
   detector: detectorFn
-  state: State
   constructor (name: string) {
     this.name = name
     this.detector = noop
-    this.state = new State(name)
   }
 
   detect (fn: detectorFn) {
@@ -30,12 +28,11 @@ class Dependency {
       state.latency = latency
       if (err) {
         state.withError(err)
-        this.state = state
         cb(state)
         return
       }
+
       state.withOk()
-      this.state = state
       cb(state)
       return
     })

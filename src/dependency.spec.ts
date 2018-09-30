@@ -10,7 +10,7 @@ describe('dependency', () => {
     d.getState((state) => {
       assert.isTrue(state.active)
       assert.equal(state.status, 'Ok')
-      assert.isAbove(state.latency, 100000000)
+      assert.isAbove(state.latency, 95000000)
       assert.isBelow(state.latency, 120000000)
       done()
     })
@@ -25,7 +25,7 @@ describe('dependency', () => {
     d.getState((state) => {
       assert.isFalse(state.active)
       assert.equal(state.status, 'Error: failed')
-      assert.isAbove(state.latency, 100000000)
+      assert.isAbove(state.latency, 95000000)
       assert.isBelow(state.latency, 120000000)
       done()
     })

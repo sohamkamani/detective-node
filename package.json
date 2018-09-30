@@ -4,7 +4,8 @@
   "description": "🔎 A distributed application health monitoring library",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --require ts-node/register src/**/*.spec.ts"
+    "test": "mocha --require ts-node/register src/**/*.spec.ts",
+    "test:dev": "mocha --require ts-node/register --watch-extensions ts --watch src/**/*.spec.ts"
   },
   "repository": {
     "type": "git",

@@ -6,9 +6,8 @@ describe('endpoint', function () {
   this.timeout(1000)
   it('should get state from remote endpoint', (done) => {
     const port = 9091
-    http
-      .createServer((req, res) => {
-        res.write(`{
+    const server = http.createServer((req, res) => {
+      res.write(`{
         "name": "Another application",
         "active": false,
         "status": "Error: dependency failure",
@@ -28,9 +27,10 @@ describe('endpoint', function () {
           }
         ]
       }`)
-        res.end()
-      })
-      .listen(port)
+      res.end()
+    })
+
+    server.listen(port)
     const ep = new Endpoint('sample', 'http://127.0.0.1:' + port)
     ep.getState((state) => {
       const expectedSubObject = {
@@ -54,6 +54,47 @@ describe('endpoint', function () {
       assert.lengthOf(state.dependencies, 2)
       assert.deepInclude(state.dependencies[0], expectedDependencies[0])
       assert.deepInclude(state.dependencies[1], expectedDependencies[1])
+      done()
+      server.close()
+    })
+  })
+
+  it('should get failed state if remote endpoint returns unexpected status', (done) => {
+    const port = 9091
+    const server = http.createServer((req, res) => {
+      res.statusCode = 500
+      res.write('{"error":true}')
+      res.end()
+    })
+
+    server.listen(port)
+    const ep = new Endpoint('sample', 'http://127.0.0.1:' + port)
+    ep.getState((state) => {
+      const expectedSubObject = {
+        name: 'sample',
+        active: false,
+        status: 'Error: HTTP request received unexpected status: 500',
+        dependencies: []
+      }
+      assert.deepInclude(state, expectedSubObject)
+      assert.lengthOf(state.dependencies, 0)
+      done()
+
+      server.close()
+    })
+  })
+
+  it('should get failed state if remote endpoint doesnt exist', (done) => {
+    const ep = new Endpoint('sample', 'http://127.0.0.1:9092')
+    ep.getState((state) => {
+      const expectedSubObject = {
+        name: 'sample',
+        active: false,
+        status: 'Error: connect ECONNREFUSED 127.0.0.1:9092',
+        dependencies: []
+      }
+      assert.deepInclude(state, expectedSubObject)
+      assert.lengthOf(state.dependencies, 0)
       done()
     })
   })

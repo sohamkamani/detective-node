@@ -29,6 +29,13 @@ class State implements iState {
     this.active = true
     return this
   }
+  withDependencies (dependencies: State[]): State {
+    this.dependencies = dependencies
+    if (dependencies.some((d) => !d.active)) {
+      return this.withError(new Error('dependency failure'))
+    }
+    return this.withOk()
+  }
 }
 
 export function stateFromObject (o: iState): State {
