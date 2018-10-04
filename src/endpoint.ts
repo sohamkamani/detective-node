@@ -1,8 +1,9 @@
 import http from 'http'
-import timer from './timer'
 import { callbackWithState } from './dependency'
 import State, { iState, stateFromObject } from './state'
 import { parse } from 'url'
+
+export const fromHeader = 'x_detective_from_chain'
 
 export default class Endpoint {
   name: string
@@ -22,27 +23,30 @@ export default class Endpoint {
     this.options = Object.assign(parsedOptions, options)
   }
 
-  getState (cb: callbackWithState) {
-    const timerDone = timer()
-    const state = new State(this.name)
-    const req = http.request(this.options, (res) => {
-      const latency = timerDone()
-      state.latency = latency
-      if (res.statusCode != 200) {
-        const err = new Error('HTTP request received unexpected status: ' + res.statusCode)
+  getState (fromChain: string): (cb: callbackWithState) => void {
+    return (cb: callbackWithState) => {
+      const state = new State(this.name)
+      this.options.headers = this.options.headers || {}
+      this.options.headers[fromHeader] = fromChain || ''
+      const req = http.request(this.options, (res) => {
+        if (res.statusCode != 200) {
+          const err = new Error('HTTP request received unexpected status: ' + res.statusCode)
+          state.withError(err)
+          cb(state)
+          return
+        }
+        this.getStateFromResponse(res, (s) => {
+          state.withOk()
+          s.latency = state.latency
+          cb(s)
+        })
+      })
+      req.on('error', (err) => {
         state.withError(err)
         cb(state)
-        return
-      }
-      this.getStateFromResponse(res, cb)
-    })
-    req.on('error', (err) => {
-      const latency = timerDone()
-      state.latency = latency
-      state.withError(err)
-      cb(state)
-    })
-    req.end()
+      })
+      req.end()
+    }
   }
 
   getStateFromResponse = (res: http.IncomingMessage, cb: callbackWithState) => {

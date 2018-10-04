@@ -1,12 +1,15 @@
 import { assert } from 'chai'
 import http from 'http'
-import Endpoint from './endpoint'
+import Endpoint, { fromHeader } from './endpoint'
 
 describe('endpoint', function () {
   this.timeout(1000)
   it('should get state from remote endpoint', (done) => {
-    const port = 9091
+    const port: number = 9091
+    let called: boolean = false
     const server = http.createServer((req, res) => {
+      called = true
+      assert.equal(req.headers[fromHeader], 'app1|app2')
       res.write(`{
         "name": "Another application",
         "active": false,
@@ -32,7 +35,7 @@ describe('endpoint', function () {
 
     server.listen(port)
     const ep = new Endpoint('sample', 'http://127.0.0.1:' + port)
-    ep.getState((state) => {
+    ep.getState('app1|app2')((state) => {
       const expectedSubObject = {
         name: 'Another application',
         active: false,
@@ -54,8 +57,9 @@ describe('endpoint', function () {
       assert.lengthOf(state.dependencies, 2)
       assert.deepInclude(state.dependencies[0], expectedDependencies[0])
       assert.deepInclude(state.dependencies[1], expectedDependencies[1])
-      done()
+      assert.isTrue(called)
       server.close()
+      done()
     })
   })
 
@@ -69,7 +73,7 @@ describe('endpoint', function () {
 
     server.listen(port)
     const ep = new Endpoint('sample', 'http://127.0.0.1:' + port)
-    ep.getState((state) => {
+    ep.getState('app1|app2')((state) => {
       const expectedSubObject = {
         name: 'sample',
         active: false,
@@ -78,15 +82,14 @@ describe('endpoint', function () {
       }
       assert.deepInclude(state, expectedSubObject)
       assert.lengthOf(state.dependencies, 0)
-      done()
-
       server.close()
+      done()
     })
   })
 
   it('should get failed state if remote endpoint doesnt exist', (done) => {
     const ep = new Endpoint('sample', 'http://127.0.0.1:9092')
-    ep.getState((state) => {
+    ep.getState('')((state) => {
       const expectedSubObject = {
         name: 'sample',
         active: false,

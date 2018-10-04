@@ -2,7 +2,7 @@
   "name": "detective-node",
   "version": "0.1.0",
   "description": "🔎 A distributed application health monitoring library",
-  "main": "index.js",
+  "main": "out/index.js",
   "scripts": {
     "test": "mocha --require ts-node/register src/**/*.spec.ts",
     "test:dev": "mocha --require ts-node/register --watch-extensions ts --watch src/**/*.spec.ts"
@@ -30,9 +30,9 @@
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
+    "npm": "^6.4.1",
     "ts-node": "^7.0.1",
-    "typescript": "^3.1.1",
-    "npm": "^6.4.1"
+    "typescript": "^3.1.1"
   },
   "dependencies": {}
 }

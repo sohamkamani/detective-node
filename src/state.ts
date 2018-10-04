@@ -1,3 +1,5 @@
+import timer from './timer'
+
 export interface iState {
   name: string
   active: boolean
@@ -11,6 +13,7 @@ class State implements iState {
   active: boolean
   status: string
   latency: number
+  timerDone: () => number
   dependencies: State[]
   constructor (name: string) {
     this.name = name
@@ -18,13 +21,19 @@ class State implements iState {
     this.status = ''
     this.latency = 0
     this.dependencies = []
+    this.timerDone = timer()
+  }
+  done () {
+    this.latency = this.timerDone()
   }
   withError (err: Error): State {
+    this.done()
     this.status = err.toString()
     this.active = false
     return this
   }
   withOk (): State {
+    this.done()
     this.status = 'Ok'
     this.active = true
     return this

@@ -1,22 +1,16 @@
 const http = require('http')
-// const bodyParser = require('body-parser')
-// const Detective = require('detective').Detective
+const Detective = require('../out')
 
-// const detective = new Detective()
-// const dep1 = detective.dependency('cache')
+const detective = new Detective('app')
 
-// dep1.detect((cb) => {
-//   setInterval(() => cb(), 1000)
-// })
-
-// const middleware = bodyParser.json()
-
-const server = http.createServer((req, res) => {
-  req.on('data', (chunk) => console.log('received chunk:', chunk.toString()))
-  req.on('end', () => {
-    res.statusCode = 204
-    res.end()
-  })
+detective.dependency('cache').detect((cb) => {
+  setTimeout(() => cb(), 100)
 })
 
-server.listen(8000)
+detective.dependency('db').detect((cb) => {
+  setTimeout(() => cb(), 250)
+})
+
+const server = http.createServer(detective.handler())
+
+server.listen(8081)

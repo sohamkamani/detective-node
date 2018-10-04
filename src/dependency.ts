@@ -21,11 +21,8 @@ class Dependency {
   }
 
   getState (cb: callbackWithState) {
-    const timerDone = timer()
+    const state = new State(this.name)
     this.detector((err) => {
-      const latency = timerDone()
-      const state = new State(this.name)
-      state.latency = latency
       if (err) {
         state.withError(err)
         cb(state)
