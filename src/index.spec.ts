@@ -1,8 +1,6 @@
 import Detective from './'
 import http from 'http'
 import { assert } from 'chai'
-import { spy } from 'sinon'
-import { write } from 'fs'
 import { fromHeader } from './endpoint'
 
 describe('detective', function () {
