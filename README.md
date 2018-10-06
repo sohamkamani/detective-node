@@ -1,8 +1,12 @@
 # Detective 🔎
 
-[![Build Status](https://travis-ci.org/sohamkamani/detective-node.svg?branch=master)](https://travis-ci.org/sohamkamani/detective-node)
+[![Build Status](https://travis-ci.org/sohamkamani/detective-node.svg?branch=master)](https://travis-ci.org/sohamkamani/detective-node) [![Coverage Status](https://coveralls.io/repos/github/sohamkamani/detective-node/badge.svg?branch=master)](https://coveralls.io/github/sohamkamani/detective-node?branch=master)
 
 Detective is a distributed application health monitoring library. It allows you to monitor arbitrary dependencies in your application, and compose other detective instances to create a distributed monitoring framework.
+
+>✅ Zero npm dependencies  
+>✅ Interoperable with instances using the [Go client](https://github.com/sohamkamani/detective)  
+>✅ Compatible with the [standard HTTP server implementation](https://nodejs.org/api/http.html#http_http_createserver_options_requestlistener) and [express.js](https://github.com/expressjs/express)  
 
 - [Detective 🔎](#detective-%F0%9F%94%8E)
   - [Installation](#installation)
@@ -11,6 +15,7 @@ Detective is a distributed application health monitoring library. It allows you 
     - [Composing instances](#composing-instances)
     - [Circular dependencies](#circular-dependencies)
   - [Dashboard](#dashboard)
+  - [Examples](#examples)
 
 ## Installation
 
@@ -175,3 +180,10 @@ detective-dashboard -p 8080
 ```
 
 You will then have to enter the URL of any detective endpoint to view its dashboard.
+
+## Examples
+
+- [Basic usage](examples/basic-usage.js)
+- [Composing detective instances](examples/composing-detective-instances.js)
+- [Express.js - Basic usage](examples/basic-usage-express.js)
+- [Circular dependencies](examples/circular-dependencies.js)
