@@ -3,11 +3,17 @@ import { callbackWithState } from './dependency'
 import State, { iState, stateFromObject } from './state'
 import { parse } from 'url'
 
+/**
+ * @ignore
+ */
 export const fromHeader = 'x_detective_from_chain'
 
+/**
+ * @ignore
+ */
 export default class Endpoint {
-  name: string
-  options: http.RequestOptions
+  private name: string
+  private options: http.RequestOptions
 
   constructor (name: string, url: string, options: http.RequestOptions = {}) {
     this.name = name
@@ -49,7 +55,7 @@ export default class Endpoint {
     }
   }
 
-  getStateFromResponse = (res: http.IncomingMessage, cb: callbackWithState) => {
+  private getStateFromResponse = (res: http.IncomingMessage, cb: callbackWithState) => {
     let resStr = ''
     res.setEncoding('utf8')
     const state = new State(this.name)

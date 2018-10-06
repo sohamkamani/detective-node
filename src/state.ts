@@ -1,5 +1,8 @@
 import timer from './timer'
 
+/**
+ * @ignore
+ */
 export interface iState {
   name: string
   active: boolean
@@ -13,8 +16,12 @@ class State implements iState {
   active: boolean
   status: string
   latency: number
-  timerDone: () => number
+  private timerDone: () => number
   dependencies: State[]
+
+  /**
+   * @ignore
+   */
   constructor (name: string) {
     this.name = name
     this.active = false
@@ -23,21 +30,34 @@ class State implements iState {
     this.dependencies = []
     this.timerDone = timer()
   }
-  done () {
+
+  private done () {
     this.latency = this.timerDone()
   }
+
+  /**
+   * @ignore
+   */
   withError (err: Error): State {
     this.done()
     this.status = err.toString()
     this.active = false
     return this
   }
+
+  /**
+   * @ignore
+   */
   withOk (): State {
     this.done()
     this.status = 'Ok'
     this.active = true
     return this
   }
+
+  /**
+   * @ignore
+   */
   withDependencies (dependencies: State[]): State {
     this.dependencies = dependencies
     if (dependencies.some((d) => !d.active)) {
@@ -47,6 +67,9 @@ class State implements iState {
   }
 }
 
+/**
+ * @ignore
+ */
 export function stateFromObject (o: iState): State {
   const s = new State('')
   s.name = o.name
