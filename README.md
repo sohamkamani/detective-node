@@ -16,6 +16,7 @@ Detective is a distributed application health monitoring library. It allows you 
     - [Circular dependencies](#circular-dependencies)
   - [Dashboard](#dashboard)
   - [Examples](#examples)
+  - [API documentation](#api-documentation)
 
 ## Installation
 
@@ -187,3 +188,7 @@ You will then have to enter the URL of any detective endpoint to view its dashbo
 - [Composing detective instances](examples/composing-detective-instances.js)
 - [Express.js - Basic usage](examples/basic-usage-express.js)
 - [Circular dependencies](examples/circular-dependencies.js)
+
+## API documentation
+
+The detailed API documentation can be found [here](https://sohamkamani.github.io/detective-node/doc/)
