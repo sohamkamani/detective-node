@@ -1,2 +1,5 @@
 node_modules
 out
+coverage
+.DS_Store
+.nyc_output

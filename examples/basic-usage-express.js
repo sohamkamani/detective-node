@@ -1,5 +1,5 @@
 const express = require('express')
-const Detective = require('../out')
+const Detective = require('detective-node')
 
 // Create a new detective instance
 const detective = new Detective('app')

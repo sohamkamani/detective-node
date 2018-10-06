@@ -1,5 +1,5 @@
 const http = require('http')
-const Detective = require('../out')
+const Detective = require('detective-node')
 
 const detective = new Detective('app')
 

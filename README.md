@@ -5,11 +5,24 @@
 Detective is a distributed application health monitoring library. It allows you to monitor arbitrary dependencies in your application, and compose other detective instances to create a distributed monitoring framework.
 
 - [Detective 🔎](#detective-%F0%9F%94%8E)
+  - [Installation](#installation)
   - [Usage](#usage)
     - [Monitoring a single application](#monitoring-a-single-application)
     - [Composing instances](#composing-instances)
     - [Circular dependencies](#circular-dependencies)
   - [Dashboard](#dashboard)
+
+## Installation
+
+```
+npm install --save detective-node
+```
+
+or
+
+```
+yarn add detective-node
+```
 
 ## Usage
 
