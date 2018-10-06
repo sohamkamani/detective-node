@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sohamkamani/node-detective.git"
+    "url": "git+https://github.com/sohamkamani/detective-node.git"
   },
   "keywords": [
     "distributed",
@@ -20,9 +20,9 @@
   "author": "Soham Kamani",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sohamkamani/node-detective/issues"
+    "url": "https://github.com/sohamkamani/detective-node/issues"
   },
-  "homepage": "https://github.com/sohamkamani/node-detective#readme",
+  "homepage": "https://github.com/sohamkamani/detective-node#readme",
   "devDependencies": {
     "@types/chai": "^4.1.6",
     "@types/mocha": "^5.2.5",
