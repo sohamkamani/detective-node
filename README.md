@@ -17,6 +17,7 @@ Detective is a distributed application health monitoring library. It allows you 
   - [Dashboard](#dashboard)
   - [Examples](#examples)
   - [API documentation](#api-documentation)
+  - [Other implementations](#other-implementations)
 
 ## Installation
 
@@ -192,3 +193,7 @@ You will then have to enter the URL of any detective endpoint to view its dashbo
 ## API documentation
 
 The detailed API documentation can be found [here](https://sohamkamani.github.io/detective-node/doc/)
+
+## Other implementations
+
+The detective library has also been implemented in Go : [https://github.com/sohamkamani/detective](https://github.com/sohamkamani/detective), is iteroperable with this implementation, and can be used as an endpoint.
